@@ -8,3 +8,13 @@ edition = "2021"
 [dependencies]
 
 [[bin]]
+name = "cargo_install"
+
+[[bin]]
+name = "hello_world"
+
+[[bin]]
+name = "basic_input"
+
+[[bin]]
+name = "guess_number"
