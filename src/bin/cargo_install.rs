@@ -34,9 +34,11 @@ const HELLO_MESSAGE: &'static str = r#"
     covered.
 
     Contributors:
-    Bohai Li     (李博海): AP of LCPU.
-    Yuanhang Sun (孙远航): AP and previous leader of LCPU.
-    Haonan Xue   (薛昊男): AP of LCPU.
+    Bohai Li      (李博海): AP of LCPU.
+    Yuanhang Sun  (孙远航): AP and previous leader of LCPU.
+    Haonan Xue    (薛昊男): AP of LCPU.
+    Zisu Zhang    (张子苏): AP of LCPU.
+    QianKang Zhou (周乾康): AP of LCPU.
     ...To be added.
 
     Contact with us: lcpu@pku.edu.cn
