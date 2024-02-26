@@ -29,9 +29,6 @@ use std::io::{self, BufRead};
 /// c = str(input()) # input a `char` (or maybe a `str` if you want)
 /// print(i, c)
 /// ```
-#[allow(unused)]
-fn input_intro() {}
-
 /// ### Rust std input
 /// But in Rust, it goes a little different.
 /// Remember that Rust requires you that you must think thoroughly what you

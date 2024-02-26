@@ -17,4 +17,10 @@ name = "hello_world"
 name = "basic_input"
 
 [[bin]]
+name = "control_flow"
+
+[[bin]]
+name = "control_flow_2"
+
+[[bin]]
 name = "guess_number"

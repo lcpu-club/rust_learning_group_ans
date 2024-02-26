@@ -11,9 +11,18 @@ use std::io::{self, Write};
 ///    /* FILL HERE */
 ///    // TODO: lock up stdout and get the handle
 ///    /* FILL HERE */
-///    handle.write_all(b"hey, stdout!")?;
+///    handle.write_all(b"hey, stdout!\n")?;
 ///    Ok(())
 /// }
+/// ```
+/// ### However, we have shortcuts: macro!
+/// This is shorter but do the same thing!
+/// ```
+/// print!("hey, stdout!\n");
+/// ```
+/// `println!` adds a '\n' automatically for you.
+/// ```
+/// println!("hey, stdout!");
 /// ```
 
 fn stdout_lock() -> io::Result<()> {
