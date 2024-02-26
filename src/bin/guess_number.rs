@@ -27,7 +27,7 @@ use std::{cmp::Ordering, io::{self, BufRead}};
 ///             // TODO: handle `exit` here.
 ///             /* FILL HERE */
 ///             trimed_buffer => {
-///                 let guess = trimed_buffer.parse::<i32>();
+///                 let guess = trimed_buffer.parse::<i32>(); // See what does `parse` do?
 ///                 match guess {
 ///                     Ok(num) => // TODO: Guessing number!
 ///                     Err(_) => // TODO: Something unhappy happened! Handle it!
