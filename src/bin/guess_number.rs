@@ -1,4 +1,7 @@
-use std::{cmp::Ordering, io::{self, BufRead}};
+use std::{
+    cmp::Ordering,
+    io::{self, BufRead},
+};
 
 fn main() {
     let secret_number: i32 = 42; // Don't let others know this!

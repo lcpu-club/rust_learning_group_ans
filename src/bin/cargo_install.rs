@@ -7,7 +7,7 @@ fn main() {
     println!("{}", HELLO_MESSAGE);
 }
 
-const HELLO_MESSAGE: &'static str = r#"
+const HELLO_MESSAGE: &str = r#"
     +---+    +----------+ +-------------------+
     |   |   /           | |                   |
     |   |  |    +-------+ |    +--------+     +
