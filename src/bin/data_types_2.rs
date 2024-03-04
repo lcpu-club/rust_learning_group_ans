@@ -127,19 +127,26 @@
 ///
 /// ```
 /// fn quiz() {
+///     let mut result = String::new();
+/// 
 ///     // Your code here
-///     println!("{}", s);
+/// 
+///     println!("{}", result);
 /// }
 /// ```
 ///
 fn quiz() {
+    let mut result = String::new();
+
     let mut s = read_line().trim().to_string();
     s.retain(|c| c != 'y');
 
     let x = parse_i32(read_line().as_str());
-
-    let s = s.repeat(x as usize);
-    println!("{}", s);
+    
+    for _ in 0..x {
+        result.push_str(&s);
+    }
+    println!("{}", result);
 }
 
 fn read_line() -> String {
