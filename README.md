@@ -15,3 +15,4 @@
 - `mutable_and_shadowing`
 - `data_types`
 - `data_types_2`
+- `control_flow_3`
