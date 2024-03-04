@@ -13,3 +13,4 @@
 ## Week3
 
 - `mutable_and_shadowing`
+- `data_types`
