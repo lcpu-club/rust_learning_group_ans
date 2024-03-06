@@ -1,0 +1,16 @@
+{
+  "name": "rust_learning_group_ans",
+  "packageManager": "yarn@4.1.0",
+  "type": "module",
+  "scripts": {
+    "generate": "zx generate.js",
+    "deploy": "zx deploy.js"
+  },
+  "devDependencies": {
+    "@aoi-js/cli": "^0.0.3",
+    "consola": "^3.2.3",
+    "typescript": "^5.3.3",
+    "yaml": "^2.4.0",
+    "zx": "^7.2.3"
+  }
+}

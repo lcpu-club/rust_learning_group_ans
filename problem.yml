@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://aoi-demo.fedstack.org/schemas/problem-config.json
+label: glue
+judge:
+  adapter: glue
+  config:
+    run: |
+      unzip -d problem $GLUE_PROBLEM_DATA
+      unzip -d solution $GLUE_SOLUTION_DATA
+      bash ./problem/judge.sh
+    timeout: 600 # 10 minutes
+submit:
+  form:
+    files:
+      - path: main.rs
+        label: 源代码
+        description: 仅需要上传题目对应的单个Rust源码文件
+        type:
+          editor:
+            language: rust
+solution:
+  maxSize: 1048576
