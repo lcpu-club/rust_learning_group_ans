@@ -5,9 +5,9 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@aoi-js/cli@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@aoi-js/cli@npm:0.0.3"
+"@aoi-js/cli@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@aoi-js/cli@npm:0.0.4"
   dependencies:
     "@aoi-js/common": "npm:^0.0.21"
     "@sinclair/typebox": "npm:^0.32.14"
@@ -25,7 +25,7 @@ __metadata:
     zx: "npm:^7.2.3"
   bin:
     aoi: lib/bin.js
-  checksum: 10c0/b102f4c1bd01dbbb7de28ce8c909b5e576a1f091bd55839bc01dbd68739da358fd346d08ee82779167f8f297118ae77d2cfb05b5a23033183c1c7621cb2305bd
+  checksum: 10c0/3a49ef74feba45ff43c8d5c45f796db4d83e661f7f932a7448cd6e2cbd40813043d4d51b721fd37f7c57ffcd88170ae2541b9c5de5dbb7e1517acf0dc5324852
   languageName: node
   linkType: hard
 
@@ -1767,7 +1767,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "rust_learning_group_ans@workspace:."
   dependencies:
-    "@aoi-js/cli": "npm:^0.0.3"
+    "@aoi-js/cli": "npm:^0.0.4"
     consola: "npm:^3.2.3"
     typescript: "npm:^5.3.3"
     yaml: "npm:^2.4.0"

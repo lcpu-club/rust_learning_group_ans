@@ -41,7 +41,12 @@ const title = name
   .split('_')
   .map((word) => word[0].toUpperCase() + word.slice(1))
   .join(' ')
-const md = `# ${title}
+const md = `---
+title: ${title}
+tags:
+  - Rust
+---
+# ${title}
 
 ${statement}`
 await fs.writeFile(path.join(__dirname, 'build', name, 'statement.md'), md)

@@ -7,7 +7,7 @@
     "deploy": "zx deploy.js"
   },
   "devDependencies": {
-    "@aoi-js/cli": "^0.0.3",
+    "@aoi-js/cli": "^0.0.4",
     "consola": "^3.2.3",
     "typescript": "^5.3.3",
     "yaml": "^2.4.0",
