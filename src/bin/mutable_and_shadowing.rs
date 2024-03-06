@@ -127,13 +127,15 @@
 /// ```
 /*- template-start -*/
 fn quiz() {
-    let mut x = 1; // FIX ME
+    //- replace-with let x = 1; // FIX ME
+    let mut x = 1;
     assert_eq!(x, 1);
 
     x = 2;
     assert_eq!(x, 2);
 
-    let mut x = "hello".to_string(); // FIX ME
+    //- replace-with x = "hello".to_string(); // FIX ME
+    let mut x = "hello".to_string();
     x.push_str(", world!");
     assert_eq!(x, "hello, world!");
 }

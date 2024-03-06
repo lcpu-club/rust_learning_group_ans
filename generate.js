@@ -12,7 +12,11 @@ function extractTemplate(code) {
       result += match[1].trim() + '\n'
     }
   }
-  return result === '' ? null : result
+  const lines = result
+    .split('\n')
+    .filter((_, i) => !i || !result[i - 1].trim().startsWith('//- replace-with '))
+    .map((line) => line.replace('//- replace-with ', ''))
+  return lines.join('\n')
 }
 
 const mappings = parse(await fs.readFile(path.join(__dirname, 'mappings.yml'), 'utf8'))
