@@ -125,6 +125,7 @@
 ///     assert_eq!(x, "hello, world!");
 /// }
 /// ```
+/*- template-start -*/
 fn quiz() {
     let mut x = 1; // FIX ME
     assert_eq!(x, 1);
@@ -140,3 +141,4 @@ fn quiz() {
 fn main() {
     quiz()
 }
+/*- template-end -*/

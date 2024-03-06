@@ -2,15 +2,48 @@
 
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source "$script_dir/container_lib.sh"
+source "$script_dir/check_lib.sh"
 source "$script_dir/judge_lib.sh"
 start_time=$(date +%s)
+
+details=$(cat "$GLUE_DETAILS")
+
+if [ -f problem/template.rs ]; then
+    score=100
+    status="Success"
+    summary=$(cat <<EOF
+Source check passed
+EOF
+)
+    msg=$(check_source ./problem/template.rs ./solution/main.rs)
+    if [ $? -ne 0 ]; then
+        score=0
+        status="Wrong Answer"
+        summary=$(cat <<EOF
+Source check failed:
+\`\`\`
+$msg
+\`\`\`
+EOF
+)
+    fi
+    compile_job=$(generate_job "Source Check" "$score" 0 "$status" "$summary")
+    details=$(append_job_to_details "$details" "$compile_job")
+    echo "$details" >"$GLUE_DETAILS"
+
+    if [ $score -eq 0 ]; then
+        echo score=0 >"$GLUE_REPORT"
+        echo status="$status" >"$GLUE_REPORT"
+        echo message="Source check failed" >"$GLUE_REPORT"
+        echo commit=1 >"$GLUE_REPORT"
+        exit 0
+    fi
+fi
 
 echo score=0 >"$GLUE_REPORT"
 echo status=Running >"$GLUE_REPORT"
 echo "message=Compiling solution" >"$GLUE_REPORT"
 echo commit=1 >"$GLUE_REPORT"
-
-details=$(cat "$GLUE_DETAILS")
 
 cp -r problem/template combined_solution
 cp solution/main.rs combined_solution/src/main.rs

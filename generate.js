@@ -3,6 +3,18 @@ import 'zx/globals'
 import { parse, stringify } from 'yaml'
 import consola from 'consola'
 
+function extractTemplate(code) {
+  const regex = /\/\*- template-start -\*\/([\s\S]*?)\/\*- template-end -\*\//g
+  let match
+  let result = ''
+  while ((match = regex.exec(code)) !== null) {
+    if (match[1]) {
+      result += match[1].trim() + '\n'
+    }
+  }
+  return result === '' ? null : result
+}
+
 const mappings = parse(await fs.readFile(path.join(__dirname, 'mappings.yml'), 'utf8'))
 /** @type {string} */
 const name = argv.name
@@ -26,12 +38,19 @@ if (!(await fs.exists(data))) {
 }
 await $`rm -rf ${__dirname}/build/${name}`
 await $`mkdir -p ${__dirname}/build/${name}`
-await $`cp ${__dirname}/problem.yml ${__dirname}/build/${name}/`
 await $`cp -r ${__dirname}/fixtures/common ${__dirname}/build/${name}/data`
 await $`cp -r ${data}/* ${__dirname}/build/${name}/data`
 await $`cp ${source} ${__dirname}/build/${name}/main.rs`
 
+const problemConfig = parse(await fs.readFile(path.join(__dirname, 'problem.yml'), 'utf8'))
 const code = await fs.readFile(source, 'utf8')
+const template = extractTemplate(code)
+if (template) {
+  await fs.writeFile(path.join(__dirname, 'build', name, 'data', 'template.rs'), template)
+  problemConfig.submit.form.files[0].default = template
+}
+await fs.writeFile(path.join(__dirname, 'build', name, 'problem.yml'), stringify(problemConfig))
+
 const statement = code
   .split('\n')
   .filter((line) => line.startsWith('/// '))
