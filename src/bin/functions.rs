@@ -50,7 +50,9 @@
 ///     assert_eq!(foo(1, 2), "hello");
 /// }
 /// ```
+/*- template-start -*/
 fn quiz() {
+    //- replace-with fn foo(x, y: i32) { // FIX ME
     fn foo(x: i32, y: i32) -> &'static str {
         println!("x: {}, y: {}", x, y);
         "hello"
@@ -61,3 +63,4 @@ fn quiz() {
 fn main() {
     quiz()
 }
+/*- template-end -*/
