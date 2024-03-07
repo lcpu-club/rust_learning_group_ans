@@ -12,9 +12,9 @@ function extractTemplate(code) {
       result += match[1].trim() + '\n'
     }
   }
-  const lines = result
-    .split('\n')
-    .filter((_, i) => !i || !result[i - 1].trim().startsWith('//- replace-with '))
+  const resultLines = result.split('\n')
+  const lines = resultLines
+    .filter((_, i) => !i || !resultLines[i - 1].trim().startsWith('//- replace-with '))
     .map((line) => line.replace('//- replace-with ', ''))
   return lines.join('\n')
 }
