@@ -6,28 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+rand = "0.8.5"
+rand_chacha = "0.3.1"
 tokio = { version = "1.36.0", features = ["full"] }
 
 [[bin]]
-name = "cargo_install"
-
-[[bin]]
-name = "hello_world"
-
-[[bin]]
-name = "basic_input"
-
-[[bin]]
-name = "basic_output"
-
-[[bin]]
-name = "hello_world_complex"
-
-[[bin]]
-name = "control_flow"
-
-[[bin]]
-name = "control_flow_2"
-
-[[bin]]
-name = "guess_number"
+name = "datagen_data_types"
+path = "src/helpers/datagen_data_types.rs"
