@@ -57,7 +57,7 @@ await fs.writeFile(path.join(__dirname, 'build', name, 'problem.yml'), stringify
 
 const statement = code
   .split('\n')
-  .filter((line) => line.startsWith('/// '))
+  .filter((line) => line.startsWith('///'))
   .map((line) => line.slice(4))
   .join('\n')
 const title = name
