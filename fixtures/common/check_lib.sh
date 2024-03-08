@@ -21,6 +21,11 @@ check_source() {
     template_line=${template_line%$'\r'}
 
     if ! IFS= read -r code_line <&4; then
+      if [[ -n $template_line && ! $template_line =~ ^[[:space:]]*$ ]]; then
+        echo "Error: The code file is shorter than the template file."
+        exec 3<&- 4<&-
+        return 1
+      fi
       # If the code file ends, check if the remaining template lines are all blank
       while IFS= read -r template_line <&3; do
         template_line=${template_line%$'\r'}
@@ -68,10 +73,11 @@ check_source() {
   done
 
   # After the main comparison loop, check for trailing non-blank lines in the code file
-  while IFS= read -r code_line <&4; do
+  while IFS= read -r code_line <&4 || [[ -n $code_line ]]; do
     code_line=${code_line%$'\r'}
     if [[ -n $code_line && ! $code_line =~ ^[[:space:]]*$ ]]; then
-      echo "Error: The code file has extra non-blank trailing lines."
+      echo "Error: The code file has extra non-blank trailing line:"
+      echo "Code: $code_line"
       exec 3<&- 4<&-
       return 1
     fi

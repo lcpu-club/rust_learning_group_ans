@@ -3,6 +3,9 @@ import 'zx/globals'
 import { parse, stringify } from 'yaml'
 import consola from 'consola'
 
+/**
+ * @param {string} code
+ */
 function extractTemplate(code) {
   const lines = code.split('\n')
   let parsing = false
@@ -15,10 +18,10 @@ function extractTemplate(code) {
     }
     if (parsing && line === '/// ```') {
       parsing = false
-      return result.join('\n')
+      return result.join('\n').trimEnd() + '\n'
     }
     if (parsing) {
-      result.push(line.slice(4))
+      result.push(line.slice(4).trimEnd())
     }
   }
 }
