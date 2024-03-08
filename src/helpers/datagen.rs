@@ -35,7 +35,8 @@ impl<M: Model> Datagen<M> {
 
     pub fn sample_cases(self, rng: &mut impl rand::Rng, count: usize) -> Self {
         let mut cases = self.cases;
-        for _ in cases.len()..count {
+        while cases.len() < count {
+            println!("Generating case {}", cases.len() + 1);
             cases.push(M::arbitrary(rng));
         }
         Self { cases, ..self }

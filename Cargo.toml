@@ -19,3 +19,7 @@ path = "src/helpers/datagen_data_types.rs"
 [[bin]]
 name = "datagen_data_types_2"
 path = "src/helpers/datagen_data_types_2.rs"
+
+[[bin]]
+name = "datagen_control_flow_3"
+path = "src/helpers/datagen_control_flow_3.rs"
