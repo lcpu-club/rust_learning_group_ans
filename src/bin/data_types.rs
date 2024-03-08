@@ -124,7 +124,7 @@
 ///
 /// Complete the function `quiz` to solve the problem.
 ///
-/// ```
+/// ```no_run
 /// fn quiz() {
 ///     let x = read_i32();
 ///     let y = read_f64();

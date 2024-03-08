@@ -125,7 +125,7 @@
 ///
 /// Complete the `quiz` function to solve this problem.
 ///
-/// ```
+/// ```no_run
 /// fn quiz() {
 ///     let mut result = String::new();
 ///

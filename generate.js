@@ -58,6 +58,8 @@ if (template) {
     await fs.writeFile(path.join(__dirname, 'build', name, 'data', 'template.rs'), template)
     problemConfig.submit.form.files[0].description =
       '注意：只允许修改标有 `// FIX ME` 的行，否则直接计0分。'
+  } else {
+    problemConfig.submit.form.files[0].description = '请基于如下Rust代码模板修改并提交。'
   }
   problemConfig.submit.form.files[0].default = template
 }
