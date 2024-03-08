@@ -13,7 +13,7 @@ submit:
     files:
       - path: main.rs
         label: 源代码
-        description: 仅需要上传题目对应的单个Rust源码文件
+        description: 请基于如下Rust代码模板修改并提交。
         type:
           editor:
             language: rust

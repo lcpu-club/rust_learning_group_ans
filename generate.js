@@ -4,19 +4,23 @@ import { parse, stringify } from 'yaml'
 import consola from 'consola'
 
 function extractTemplate(code) {
-  const regex = /\/\*- template-start -\*\/([\s\S]*?)\/\*- template-end -\*\//g
-  let match
-  let result = ''
-  while ((match = regex.exec(code)) !== null) {
-    if (match[1]) {
-      result += match[1].trim() + '\n'
+  const lines = code.split('\n')
+  let parsing = false
+  /** @type {string[]} */
+  const result = []
+  for (const line of lines) {
+    if (!parsing && line === '/// ```no_run') {
+      parsing = true
+      continue
+    }
+    if (parsing && line === '/// ```') {
+      parsing = false
+      return result.join('\n')
+    }
+    if (parsing) {
+      result.push(line.slice(4))
     }
   }
-  const resultLines = result.split('\n')
-  const lines = resultLines
-    .filter((_, i) => !i || !resultLines[i - 1].trim().startsWith('//- replace-with '))
-    .map((line) => line.replace('//- replace-with ', ''))
-  return lines.join('\n')
 }
 
 const mappings = parse(await fs.readFile(path.join(__dirname, 'mappings.yml'), 'utf8'))
@@ -50,7 +54,11 @@ const problemConfig = parse(await fs.readFile(path.join(__dirname, 'problem.yml'
 const code = await fs.readFile(source, 'utf8')
 const template = extractTemplate(code)
 if (template) {
-  await fs.writeFile(path.join(__dirname, 'build', name, 'data', 'template.rs'), template)
+  if (template.includes('// FIX ME')) {
+    await fs.writeFile(path.join(__dirname, 'build', name, 'data', 'template.rs'), template)
+    problemConfig.submit.form.files[0].description =
+      '注意：只允许修改标有 `// FIX ME` 的行，否则直接计0分。'
+  }
   problemConfig.submit.form.files[0].default = template
 }
 await fs.writeFile(path.join(__dirname, 'build', name, 'problem.yml'), stringify(problemConfig))
