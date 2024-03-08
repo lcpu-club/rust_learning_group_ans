@@ -154,6 +154,42 @@
 /// UNO!
 /// 4
 /// ```
+///
+/// ```no_run
+/// fn quiz() {
+///     let mut total = 0;
+///     let mut cards = [0; 13];
+///    
+///     // Your code here
+///
+///     println!("{}", total);
+/// }
+///
+/// fn read_line() -> String {
+///     let mut buffer = String::new();
+///     std::io::stdin().read_line(&mut buffer).unwrap();
+///     buffer.trim().to_string()
+/// }
+///
+/// /// A magic deck for you :D
+/// fn draw_card() -> usize {
+///     use std::cell::Cell;
+///     thread_local! {
+///         static SEED: Cell<i32> = const { Cell::new(0) };
+///     }
+///     SEED.with(|seed| {
+///         let val = seed.get();
+///         let next = (val * 71 + 3) % 100;
+///         seed.set(next);
+///         (next % 10) as usize
+///     })
+/// }
+///
+/// fn main() {
+///     quiz()
+/// }
+/// ```
+
 fn quiz() {
     let mut total = 0;
     let mut cards = [0; 13];

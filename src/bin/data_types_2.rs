@@ -130,8 +130,22 @@
 ///     let mut result = String::new();
 ///
 ///     // Your code here
-///
+///     
 ///     println!("{}", result);
+/// }
+///
+/// fn read_line() -> String {
+///     let mut buffer = String::new();
+///     std::io::stdin().read_line(&mut buffer).unwrap();
+///     buffer
+/// }
+///
+/// fn parse_i32(s: &str) -> i32 {
+///     s.trim().parse::<i32>().unwrap()
+/// }
+///
+/// fn main() {
+///     quiz()
 /// }
 /// ```
 ///

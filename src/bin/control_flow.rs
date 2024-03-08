@@ -37,6 +37,38 @@ use std::io;
 /// 1. take a number x (i32) from stdin.
 /// 2. Compare it with 5, print "Less", "Equal", "Greater" (remember newline)
 /// according to the result of comparing x with 5.
+///
+/// ```no_run
+/// fn quiz() {
+///     let x = read_i32();
+///     let y = read_f64();
+///
+///     // Your code here
+/// }
+///
+/// fn read_i32() -> i32 {
+///     read()
+/// }
+///
+/// fn read_f64() -> f64 {
+///     read()
+/// }
+///
+/// fn read<T>() -> T
+/// where
+///     T: std::str::FromStr,
+///     T::Err: std::fmt::Debug,
+/// {
+///     let mut buffer = String::new();
+///     std::io::stdin().read_line(&mut buffer).unwrap();
+///     buffer.trim().parse::<T>().unwrap()
+/// }
+///
+/// fn main() {
+///     quiz()
+/// }
+/// ```
+
 fn cf_if() {
     let mut buffer = String::new();
     io::stdin().read_line(&mut buffer).unwrap();

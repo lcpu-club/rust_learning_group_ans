@@ -68,6 +68,7 @@ const statement = code
   .filter((line) => line.startsWith('///'))
   .map((line) => line.slice(4))
   .join('\n')
+  .replace(/```no_run/g, '```rust')
 const title = name
   .split('_')
   .map((word) => word[0].toUpperCase() + word.slice(1))
