@@ -158,7 +158,7 @@
 /// ```no_run
 /// fn quiz() {
 ///     let mut total = 0;
-///     let mut cards = [0; 13];
+///     let mut cards = [0; 10];
 ///    
 ///     // Your code here
 ///
@@ -192,7 +192,7 @@
 
 fn quiz() {
     let mut total = 0;
-    let mut cards = [0; 13];
+    let mut cards = [0; 10];
     loop {
         match read_line().as_str() {
             "+2" => {
