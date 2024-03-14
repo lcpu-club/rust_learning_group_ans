@@ -17,3 +17,7 @@
 - `data_types_2`
 - `functions`
 - `control_flow_3`
+
+## Week4
+
+- `memory_model`
