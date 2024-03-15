@@ -14,7 +14,78 @@
 /// section of this week. Here we will try to explain it without considering the
 /// memory details.
 ///
-/// TODO: Finish the tutorial.
+/// When you bind a value to a name in Rust, that identifier
+/// becomes the *owner* of the value. One value cannot have more than one owner.
+/// Just like in C++, when this name goes out of scope, the value will lose its
+/// owner and be dropped. 
+/// 
+/// ```
+/// { 
+///     let x = vec![114, 514]; // `x` is the owner of the Vec.
+/// } // `x` goes out of scope, and the Vec is also dropped here.
+/// ```
+/// 
+/// ### Move Semantics
+/// 
+/// You may wonder what happens when you perform a bind, an assignment, or do a function
+/// call. This doesn't violate the *one owner* rule, because Rust uses *move semantics*.
+/// The value's ownership is transferred to the new name, and the old name is no
+/// longer valid. If you try to use the old name again, the compiler will warn you
+/// that the value has been moved.
+/// 
+/// Actually, when an owner goes out of scope, it is considered to be moved into nowhere.
+/// This can also be considered as a move. When a value isn't given a name, it is also
+/// considered to be moved into nowhere. Moving into nowhere causes the value to be dropped
+/// immediately. You can check the `[drop]` function in the standard library's `mem` module
+/// to see how Rust allows you to drop a value manually.
+/// 
+/// [drop]: https://doc.rust-lang.org/std/mem/fn.drop.html
+/// 
+/// ```
+/// let x = vec![114, 514];
+/// let y = x; // `x` is moved to `y`.
+/// println!("{:?}", x); // ! Compiler Error: Use of moved value: `x`
+/// 
+/// let x = vec![114, 514];
+/// fn f(x: Vec<i32>) { // `x` is moved to the function.
+///     x // `x` is returned to the caller.
+/// }
+/// let y = f(x); // `x` is moved into `f`, and `f` returns it to `y`.
+/// println!("{:?}", x); // ! Compiler Error: Use of moved value: `x`
+/// ```
+/// 
+/// The quiz will help you analyze the assignment case, which is a bit more subtle. A little
+/// hint: where did the old value of the left-hand side go?
+/// 
+/// ### Clone and Copy
+/// 
+/// Rust uses move semantics as default, which is exactly the opposite of C++. Binding,
+/// assignment, and function call won't duplicate your value by default. However, if you
+/// want to duplicate a value, you can use the `clone` method, provided by the `Clone` trait.
+/// Cloning won't take the ownership of the value (recall C++'s copy constructor, where we
+/// use `const T&`), it just borrows the value, reads from the borrow and make a value
+/// that is exactly the same. This new value can now have a different owner.
+/// 
+/// Some values are trivially cloneable, and Rust provides a `Copy` trait for them. Built-in
+/// types like numbers, booleans, and references (pointers) are `Copy`. If a type is `Copy`,
+/// then it will opt out of the move semantics. Whenever moved, these types will automatically
+/// duplicate themselves. But this won't break the *one owner* rule, because the new value is
+/// still a clone independent one. Notice that down to the metal, there might not be a
+/// duplication at all, because the compiler is very likely to optimize it away. But on the 
+/// top level, it's still compatible with the *one owner* rule.
+/// 
+/// ```
+/// let x = 114;
+/// let y = x; // `x` is copied to `y`.
+/// println!("{:?}", x); // OK!
+/// ```
+/// 
+/// Although one value cannot have more than one owner, it can be accessed by others. This is
+/// called *borrowing*. We will discuss it in the next section.
+/// 
+/// For complex types like arrays, structs, tuples and enums, Rust doesn't
+/// allow partial ownership. If a component of a complex value is moved, the whole value is
+/// considered to be moved. Keep this in mind.
 /// 
 /// ### Quiz
 /// 
