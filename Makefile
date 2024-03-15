@@ -14,7 +14,7 @@ week3.build: $(addsuffix .build, $(week3))
 week3.deploy: $(addsuffix .deploy, $(week3))
 	@echo "Deploying week3"
 
-week4=ownership
+week4=ownership reference
 
 week4.build: $(addsuffix .build, $(week4))
 	@echo "Building week4"
