@@ -148,6 +148,7 @@
 ///     let b = B;
 /// 
 ///     // The count starts from here.
+///     #[allow(unused_variables)]
 ///     let b = move_it(b);
 ///     // The count ends here.
 /// 
