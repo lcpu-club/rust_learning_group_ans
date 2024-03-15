@@ -1,0 +1,14 @@
+A(1) is created.
+A(2) is created.
+===
+B is moved 5 times.
+===
+A(1) is cloned.
+A(1) is dropped.
+===
+A(1) is cloned.
+A(2) is cloned.
+A(1) is dropped.
+A(2) is dropped.
+A(2) is dropped.
+A(1) is dropped.
