@@ -182,6 +182,7 @@
 ///     println!("===");
 ///  
 ///     let a1_clone = a1.clone();
+///     #[allow(unused_variables)]
 ///     let a2_clone = a2.clone();
 /// 
 ///     // Here we give you one line to fix this! Try to type as few characters as possible.
