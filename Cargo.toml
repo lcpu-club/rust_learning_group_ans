@@ -11,6 +11,9 @@ rand_chacha = "0.3.1"
 rand_distr = "0.4.3"
 tokio = { version = "1.36.0", features = ["full"] }
 
+[features]
+default = []
+oj = []
 
 [[bin]]
 name = "datagen_data_types"
