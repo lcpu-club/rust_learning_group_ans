@@ -46,9 +46,17 @@ echo "message=Compiling solution" >"$GLUE_REPORT"
 echo commit=1 >"$GLUE_REPORT"
 
 cp -r problem/template combined_solution
-cp solution/main.rs combined_solution/src/main.rs
+
+if [ -f problem/.oj-merge ] && [ -f problem/.source.rs ]; then
+    echo "message=Merging source" >"$GLUE_REPORT"
+    cat problem/.source.rs >>combined_solution/src/main.rs
+    echo "// -- Source of the problem ends here --" >>combined_solution/src/main.rs
+fi
+
+cat solution/main.rs >>combined_solution/src/main.rs
+
 cd combined_solution || exit 1
-metrics=$(run_container -t 10 -o ../build.out -e ../build.err -- -v .:/solution -w /solution docker.io/rust:bookworm cargo build -r)
+metrics=$(run_container -t 10 -o ../build.out -e ../build.err -- -v .:/solution -w /solution docker.io/rust:bookworm cargo build -r --features judge)
 exit_code=$?
 artifact=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[].targets[] | select( .kind | map(. == "bin") | any ) | .name')
 binary=../combined_solution/target/release/$artifact
