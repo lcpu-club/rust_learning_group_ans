@@ -76,7 +76,7 @@
 /// limited your lifetime too much. Anyway, **you should focus on the `quiz` function's lifetime 
 /// bounds only. 
 /// 
-/// ```no-run
+/// ```no_run
 /// fn quiz<'a, 'b, 'c, 'd, 'e>(src1: &'a str, src2: &'b str, dst: &'c mut &'d str) -> &'e str
 /// where 'a: 'b, 'a: 'a, 'b: 'a // FIX ME
 /// {

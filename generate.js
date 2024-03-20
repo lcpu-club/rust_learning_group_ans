@@ -14,7 +14,7 @@ function extractTemplate(code) {
   /** @type {string[]} */
   const result = []
   for (const line of lines) {
-    if (line === "#![cfg(not(oj_no_merge))]") {
+    if (line === '#![cfg(not(oj_no_merge))]') {
       ojMerge = true
     }
     if (!parsing && line === '/// ```no_run') {
@@ -25,7 +25,7 @@ function extractTemplate(code) {
       parsing = false
       return {
         template: result.join('\n').trimEnd() + '\n',
-        ojMerge,
+        ojMerge
       }
     }
     if (parsing) {
@@ -69,9 +69,9 @@ const { template, ojMerge: ojMergeInCode } = extractTemplate(code)
 
 // Check if the .oj-merge file exists
 const ojMergeFilePath = path.join(__dirname, 'fixtures', name, '.oj-merge')
-const ojMergeInData = await fs.exists(ojMergeFile);
+const ojMergeInData = await fs.exists(ojMergeFilePath)
 
-const ojMerge = ojMergeInCode || ojMergeInData;
+const ojMerge = ojMergeInCode || ojMergeInData
 if (ojMerge) {
   consola.info(`Merging enabled for ${name}`)
   // Create the .oj-merge file in the data directory
@@ -94,7 +94,8 @@ if (template) {
   }
 
   if (ojMerge) {
-    problemConfig.submit.form.files[0].description += '\n注意：本题另包含未公开的评测代码，且保留 `judge` 模块。你的作答将会被拼接在评测代码之后。'
+    problemConfig.submit.form.files[0].description +=
+      '\n注意：本题另包含未公开的评测代码，且保留 `judge` 模块。你的作答将会被拼接在评测代码之后。'
   }
   problemConfig.submit.form.files[0].default = template
 }
