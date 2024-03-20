@@ -46,6 +46,7 @@ echo "message=Compiling solution" >"$GLUE_REPORT"
 echo commit=1 >"$GLUE_REPORT"
 
 cp -r problem/template combined_solution
+: >combined_solution/src/main.rs
 
 if [ -f problem/.oj-merge ] && [ -f problem/.source.rs ]; then
     echo "message=Merging source" >"$GLUE_REPORT"
