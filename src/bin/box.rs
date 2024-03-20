@@ -129,6 +129,21 @@
 ///
 /// Replace the `todo!()` macros with your own implementation.
 ///
+/// ### Hint
+/// You may define struct `TreeNode` like this:
+/// ```rust
+/// struct TreeNode {
+///     val: i32,
+///     depth: i32,
+///     left: <Box<TreeNode>>,
+///     right: <Box<TreeNode>>,
+/// }
+/// ```
+/// But then you will find though compiler will not complain, you can not even create
+/// an instance of `TreeNode`. The problem is that we can not represent an empty
+/// subtree this way. Maybe `Option<T>` is a good choice to solve it.
+///
+///
 /// ```no_run
 /// struct TreeNode {
 ///     todo!()
