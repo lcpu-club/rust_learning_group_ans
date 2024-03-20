@@ -62,10 +62,14 @@ check_source() {
         return 1
       fi
     else
-      if [[ "$template_line" != "$code_line" ]]; then
-        echo "Error: Line $line_number does not match:"
-        echo "Template: $template_line"
-        echo "Code:     $code_line"
+      template_line="${template_line#"${template_line%%[![:space:]]*}"}"
+      template_line="${template_line%"${template_line##*[![:space:]]}"}"
+      code_line="${code_line#"${code_line%%[![:space:]]*}"}"
+      code_line="${code_line%"${code_line##*[![:space:]]}"}"
+      if [[ "${template_line}" != "${code_line}" ]]; then
+        echo "Error   : Line ${line_number} does not match:"
+        echo "Template: ${template_line}"
+        echo "Code    : ${code_line}"
         exec 3<&- 4<&-
         return 1
       fi
