@@ -1,6 +1,6 @@
 //! smart pointer - Box<T>
 
-/// Box is used to allocate memory on the heap instead of the stack
+/// `Box` is used to allocate memory on the heap instead of the stack
 ///
 ///
 /// ### Heap and Stack
@@ -17,7 +17,7 @@
 /// In the programs that we have written so far, most of the data has been stored on
 /// the stack, as they have a known, fixed size. But sometimes, we need to store data
 /// with an unknown size at compile time or a size that might change. In this case,
-/// we need to allocate memory on the heap. That is where Box comes in.
+/// we need to allocate memory on the heap. That is where `Box` comes in.
 ///
 /// ### Box
 /// Don't feel afraid of the word "smart pointer". `Box` is nearly the simplest smart
@@ -49,40 +49,38 @@
 /// }
 /// ```
 ///
-/// Box<T> can be viewed as a pointer to a heap-allocated value of type T. So the
-/// size of Box<T> is fixed, and the size of T is not important. This is why Box<T>
+/// `Box<T>` can be viewed as a pointer to a heap-allocated value of type `T`. So the
+/// size of `Box<T>` is fixed, and the size of `T` is not important. This is why `Box<T>`
 /// can be used to solve the problem of recursive types.
 ///
-/// Notice that although Box<T> is a pointer, but it has exclusive ownership of the
+/// Notice that although `Box<T>` is a pointer, but it has exclusive ownership of the
 /// value it points to. So whenever you want to declare recursive types, you'd better
 /// consider how to arrange the ownership of different parts of types.
 ///
 /// ### Create
 ///
-/// An instance of Box<T> is created by calling the Box::new function and passing the
-/// value that you want to store on the heap. When a Box<T> goes out of scope, the heap
+/// An instance of `Box<T>` is created by calling the `Box::new` function and passing the
+/// value that you want to store on the heap. When a `Box<T>` goes out of scope, the heap
 /// data that the box is pointing to is cleaned up as well, which means that the value
 /// that the box is pointing to is cleaned up.
 ///
-/// For example, if you want to create a list like " 1 -> 2 -> 3 -> Nil" with the type
+/// For example, if you want to create a list like "1 -> 2 -> 3 -> Nil" with the type
 /// we defined above, you can do it like this:
 ///
 /// ```rust
 /// let list = List::Cons(1, Box::new(List::Cons(2, Box::new(List::Cons(3, Box::new(List::Nil))))));
 /// ````
 ///
-/// The definition may not be very pretty, but it's just a demonstration. A loop or
-/// recursion will make it much better.
-///
 /// ### Use
 ///
-/// Thanked to the Deref trait, you can use a Box<T> as a normal reference. (If you want
-/// to know more about Deref, you can google it or wait for chapters in future.) (However,
-/// writer is not sure if Deref trait will be introduced in future chapters. :( )
+/// Thanked to the `Deref` trait, you can use a `Box<T>` as a normal reference. (If you want
+/// to know more about `Deref`, you can google it or wait for chapters in future.) ~~However,
+/// writer is not sure if Deref trait will be introduced in future chapters. :(~~
 ///
-/// That means &Box<T> can be automatically dereferenced to &T. So you can use a
-/// Box<T> as a normal variable or use &Box<T> as a normal reference. All methods of T
-/// can be used on a Box<T> directly as well.
+/// To simply introduce, `Deref` is a trait that is used to overload the dereference operator.
+/// That means `&Box<T>` can be automatically dereferenced to `&T`. So you can use a
+/// `Box<T>` as a normal variable or use `&Box<T>` as a normal reference. All methods of `T`
+/// can be used on a `Box<T>` directly as well.
 ///
 /// ### Quiz
 ///
@@ -110,8 +108,8 @@
 /// - contains a single line with a list of integers separated by spaces. The first
 ///   integer is the value of the root node, and the rest of the integers are the values
 ///   to be inserted into the tree.
-/// - The input is guaranteed to be non-empty and contains at most 100 integers, and all
-///   integers are in the range of i32.
+/// - The input is guaranteed to be non-empty and contains at most 2500 integers, and all
+///   integers are in the range of `i32`.
 ///
 /// ### Output
 /// - contains a single line with a single integer, the maximum product of depth and value
@@ -141,7 +139,7 @@
 /// ```
 /// But then you will find though compiler will not complain, you can not even create
 /// an instance of `TreeNode`. The problem is that we can not represent an empty
-/// subtree this way. Maybe `Option<T>` is a good choice to solve it.
+/// subtree in this definition. Maybe `Option<T>` is a good choice to solve it.
 ///
 ///
 /// ```no_run
