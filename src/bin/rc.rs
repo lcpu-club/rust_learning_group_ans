@@ -138,8 +138,8 @@
 /// **Notice** that it is garanteed that the graph is a DAG, and the nodes are numbered from 0 to n-1.
 /// All indices of the nodes which is pointed by `i`-th node are less than `i`.
 ///
-/// The number of nodes is no more than 1000, the value of each node is no more than 2000,
-/// and the sum of the number of edges is no more than 5000.
+/// The number of nodes is no more than 1000, the value of each node is no positive
+/// integer and no more than 2000, and the sum of the number of edges is no more than 5000.
 ///
 /// ### Output Format
 /// A single integer, the maximum sum of values of the nodes in the path.
@@ -167,9 +167,16 @@
 /// will not be modified in the future. Using some data structure to store all the nodes have been
 /// created when creating the graph also seems to be a good idea.
 ///
+/// To get the maximum sum of values of the nodes in the path, you can use Depth-First Search (DFS)
+/// to traverse the graph. Let f(i) be the maximum sum of values of the nodes in the path starting
+/// from node i, then f(i) = max(f(j) + val(i)), where j is the index of the nodes that the i-th
+/// node points to, and val(i) is the value of the i-th node. You can use a recursive function to
+/// calculate f(i) for each node, and return the value of f(n-1).
+///
 /// ```no_run
 /// use std::rc::Rc;
 ///
+/// /// it's ok to modify the struct definition
 /// struct GraphNode {
 ///     val: u32,
 ///     next: Vec<Rc<GraphNode>>,
