@@ -141,6 +141,10 @@
 /// The number of nodes is no more than 1000, the value of each node is no positive
 /// integer and no more than 2000, and the sum of the number of edges is no more than 5000.
 ///
+/// Considered that it is not convenient to modify the information of the nodes, the
+/// test cases is quite weak that you even do not need to maintain `visited` marks to avoid
+/// visiting the same node twice when traversing the graph.
+///
 /// ### Output Format
 /// A single integer, the maximum sum of values of the nodes in the path.
 ///
