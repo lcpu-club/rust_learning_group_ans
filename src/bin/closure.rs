@@ -1,8 +1,6 @@
 //! closures: functions that can capture their environment
 #![cfg(not(oj_no_merge))]
 
-use rand::Rng;
-
 /// ### Closures
 /// 
 /// You might have heard about lambdas or anonymous functions in other languages.
@@ -148,31 +146,63 @@ use rand::Rng;
 /// your code with `RefCell::new` and `Option::map_or_else` and then rename it before
 /// submitting.
 /// 
-/// We provide the a fixed test case for you.
+/// #### Input
 /// 
+/// ```text
+/// None
+/// None
+/// -437603491
+/// -384069753
+/// None
+/// None
+/// None
 /// ```
-/// let mut stack = func(vec![1, 2, 3]);
-/// assert_eq!(stack(None), Some(3));
-/// assert_eq!(stack(Some(4)), None);
-/// assert_eq!(stack(None), Some(4));
-/// assert_eq!(stack(None), Some(2));
-/// assert_eq!(stack(None), Some(1));
-/// assert_eq!(stack(None), None);
+/// #### Output
+/// 
+/// ```text
+/// None
+/// None
+/// -384069753
+/// -437603491
+/// None
 /// ```
+/// 
+/// #### Template
 /// 
 /// ```no_run
-/// // You just need to finish these two functions.
-/// fn stack_interface(init: Vec<i32>) -> impl Fn*(Option<i32>) -> Option<i32> {
-///    todo!()
-/// }
 /// 
 /// // ! REMEMBER TO RENAME YOUR `RefCell::new` and `Option::map_or_else`
-/// fn stack_interface_with_inner_mutability(init: Vec<i32>) -> impl Fn*(Option<i32>) -> Option<i32> {
-///    todo!()
+/// fn stack_interface(init: Vec<i32>) -> impl Fn*(Option<i32>) -> Option<i32> {
+///     todo!()
+/// }
+/// 
+/// /// Test your function.
+/// /// call `test(stack_interface)` to test your function.
+/// fn test_func<F1, F2>(func: F1)
+/// where F1: Fn(Vec<i32>) -> F2,
+///       F2: FnMut(Option<i32>) -> Option<i32>
+/// {
+///     let stdin = std::io::stdin();
+///     let mut stack_op = func(vec![]);
+///     let mut buffer = String::new();
+///     while let Ok(count) = stdin.read_line(&mut buffer) {
+///         if count == 0 {
+///             break;
+///         }
+///         
+///         let op = buffer.trim().parse::<i32>().ok();
+///         if let Some(out) = stack_op(op) {
+///             println!("{}", out);
+///         } else if op.is_none() {
+///             println!("None");
+///         }
+/// 
+///         buffer.clear();
+///     }
 /// }
 /// ```
 #[cfg(not(feature = "judge"))]
-fn stack_interface(init: Vec<i32>) -> impl FnMut(Option<i32>) -> Option<i32> {
+fn _stack_interface_without_inner_mutability(init: Vec<i32>) -> impl FnMut(Option<i32>) -> Option<i32> {
     let mut stack = init;
     move |op: Option<i32>| {
         match op {
@@ -183,7 +213,7 @@ fn stack_interface(init: Vec<i32>) -> impl FnMut(Option<i32>) -> Option<i32> {
 }
 
 #[cfg(not(feature = "judge"))]
-fn stack_interface_with_inner_mutability(init: Vec<i32>) -> impl FnMut(Option<i32>) -> Option<i32> {
+fn stack_interface(init: Vec<i32>) -> impl FnMut(Option<i32>) -> Option<i32> {
     let stack = std::cell::RefCell::my_new(init);
     move |op: Option<i32>| {
         op.my_map_or_else(
@@ -223,25 +253,36 @@ impl<T> MyOption<T> for Option<T> {
     }
 }
 
-fn fixed_test<F1, F2>(func: F1)
-where F1: Fn(Vec<i32>) -> F2,
-      F2: FnMut(Option<i32>) -> Option<i32>,
-{
-    let mut stack = func(vec![1, 2, 3]);
-    assert_eq!(stack(None), Some(3));
-    assert_eq!(stack(Some(4)), None);
-    assert_eq!(stack(None), Some(4));
-    assert_eq!(stack(None), Some(2));
-    assert_eq!(stack(None), Some(1));
-    assert_eq!(stack(None), None);
-}
-
-fn rand_test<F1, F2>(func: F1)
+/// Test your function.
+/// call `test(stack_interface)` or `test(stack_interface_with_inner_mutability)` to test your function.
+#[cfg(not(feature = "judge"))]
+fn test_func<F1, F2>(func: F1)
 where F1: Fn(Vec<i32>) -> F2,
       F2: FnMut(Option<i32>) -> Option<i32>
 {
-    let mut expected: Vec<i32> = vec![];
-    let mut stack = func(vec![]);
+    let stdin = std::io::stdin();
+    let mut stack_op = func(vec![]);
+    let mut buffer = String::new();
+    while let Ok(count) = stdin.read_line(&mut buffer) {
+        if count == 0 {
+            break;
+        }
+        
+        let op = buffer.trim().parse::<i32>().ok();
+        if let Some(out) = stack_op(op) {
+            println!("{}", out);
+        } else if op.is_none() {
+            println!("None");
+        }
+
+        buffer.clear();
+    }
+}
+
+#[cfg(not(feature = "judge"))]
+fn gen_data(mut test_input: impl std::io::Write,mut test_output: impl std::io::Write) {
+    use rand::Rng;
+    let mut stack: Vec<i32> = vec![];
 
     let mut rng = rand::thread_rng();
     let op_count = rng.gen_range(1..20);
@@ -250,35 +291,46 @@ where F1: Fn(Vec<i32>) -> F2,
         let push = rng.gen();
         if push {
             let value = rng.gen();
-            expected.push(value);
-            stack(Some(value));
+            stack.push(value);
+            writeln!(test_input, "{value}").unwrap();            
         } else {
-            let expected = expected.pop();
-            assert_eq!(stack(None), expected);
+            writeln!(test_input, "None").unwrap();
+            let expected = stack.pop();
+            if let Some(expected) = expected {
+                writeln!(test_output, "{expected}").unwrap();
+            } else {
+                writeln!(test_output, "None").unwrap();
+            }
         }
     }
 
-    while let Some(expected) = expected.pop() {
-        assert_eq!(stack(None), Some(expected));
+    while let Some(expected) = stack.pop() {
+        writeln!(test_input, "None").unwrap();
+        writeln!(test_output, "{expected}").unwrap();
     }
+    writeln!(test_input, "None").unwrap();
+    writeln!(test_output, "None").unwrap();
 }
 
-
 fn main() {
-    fixed_test(stack_interface);
-    for _ in 0..10 {
-        rand_test(stack_interface);
+    #[cfg(not(feature = "judge"))]
+    {
+        let mut dir_fixture = std::path::PathBuf::from(file!()).parent().unwrap().to_path_buf();
+        dir_fixture.push("../../fixtures/closure");
+        let dir_fixture = dir_fixture.canonicalize().unwrap();
+        for idx in 0..20 {
+            let test_input = std::fs::File::create(format!("{}/test_{}.in", dir_fixture.display(), idx+1)).unwrap();
+            let test_output = std::fs::File::create(format!("{}/test_{}.ans", dir_fixture.display(), idx+1)).unwrap();
+        
+            gen_data(test_input, test_output);
+        }
     }
 
-    fixed_test(stack_interface_with_inner_mutability);
-    for _ in 0..10 {
-        rand_test(stack_interface_with_inner_mutability);
-    }
-
+    test_func(stack_interface);
     if USE_MY_REF_CELL.get() != Some(&"EF4718F4-E49F-4E66-97D0-AD41A02F3D24") {
-      panic!("You should use `RefCell::my_new`");
+        panic!("You should use `RefCell::my_new`");
     }
     if USE_MY_OPTION.get() != Some(&"A816D5FF-03E8-456B-8B75-69D95C6D1F49") {
-      panic!("You should use `Option::my_map_or_else`");
+        panic!("You should use `Option::my_map_or_else`");
     }
 }
