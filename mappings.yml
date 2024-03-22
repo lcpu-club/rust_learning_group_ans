@@ -9,3 +9,6 @@ control_flow_3: 901adf65-0545-445d-8937-1b5096b9189e
 ownership: 53e2cf5a-033c-4992-8194-c7880487590b
 references: 8b91ada9-2be6-4ad2-84b8-d65da5aaecb9
 lifetime: cb456636-649e-4d3d-8b4d-d0b46ba05dc4
+
+rc: 2a33f9f9-eb50-4620-9461-a821f0f3dc7f
+refcell: f09c5faa-73a0-4e0c-966a-47d54217a56d
