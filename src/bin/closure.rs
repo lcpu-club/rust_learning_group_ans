@@ -177,13 +177,10 @@
 /// }
 /// 
 /// /// Test your function.
-/// /// call `test(stack_interface)` to test your function.
-/// fn test_func<F1, F2>(func: F1)
-/// where F1: Fn(Vec<i32>) -> F2,
-///       F2: FnMut(Option<i32>) -> Option<i32>
+/// fn test_func()
 /// {
 ///     let stdin = std::io::stdin();
-///     let mut stack_op = func(vec![]);
+///     let mut stack_op = stack_interface(vec![]);
 ///     let mut buffer = String::new();
 ///     while let Ok(count) = stdin.read_line(&mut buffer) {
 ///         if count == 0 {
@@ -254,14 +251,11 @@ impl<T> MyOption<T> for Option<T> {
 }
 
 /// Test your function.
-/// call `test(stack_interface)` or `test(stack_interface_with_inner_mutability)` to test your function.
 #[cfg(not(feature = "judge"))]
-fn test_func<F1, F2>(func: F1)
-where F1: Fn(Vec<i32>) -> F2,
-      F2: FnMut(Option<i32>) -> Option<i32>
+fn test_func()
 {
     let stdin = std::io::stdin();
-    let mut stack_op = func(vec![]);
+    let mut stack_op = stack_interface(vec![]);
     let mut buffer = String::new();
     while let Ok(count) = stdin.read_line(&mut buffer) {
         if count == 0 {
@@ -326,7 +320,7 @@ fn main() {
         }
     }
 
-    test_func(stack_interface);
+    test_func();
     if USE_MY_REF_CELL.get() != Some(&"EF4718F4-E49F-4E66-97D0-AD41A02F3D24") {
         panic!("You should use `RefCell::my_new`");
     }
