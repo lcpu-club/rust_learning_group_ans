@@ -1,3 +1,4 @@
+#![cfg(not(oj_no_merge))]
 //! Explore generic type, trait and closure with Peano numerals and
 //! Church numerals.
 
@@ -37,7 +38,7 @@
 /// So it's clear how to define a Peano style natural number representation in Rust.
 /// We choose to use `enum` as it coult hold different `states` of a type.
 ///
-/// ```no_run
+/// ```rust
 /// #[derive(Debug, Clone, PartialEq)]
 /// enum Peano {
 ///     O,              // Zero is natural number.
@@ -127,7 +128,7 @@
 ///
 /// It's like rewriting `operator+` in C++, isn't it?
 ///
-/// ```no_run
+/// ```rust
 /// impl Add for Peano {
 ///     type Output = Peano;
 ///     fn add(self, rhs: Self) -> Self::Output {
@@ -160,7 +161,7 @@
 /// ```
 ///
 /// You should pass following tests after successfully implemented contents above.
-/// ```no_run
+/// ```rust
 /// mod test_peano {
 ///     use super::*;
 ///
@@ -252,14 +253,14 @@
 ///     >;
 /// ```
 ///
-/// ```no_run
+/// ```rust
 /// pub type Church<T> = Rc<dyn Fn(Rc<dyn Fn(T) -> T>) -> Rc<dyn Fn(T) -> T>>;
 /// ```
 ///
 /// Zero is a natural number. So in Church numeral, it is a function.
 /// We can call `zero` to get a Church number `zero`.
 ///
-/// ```no_run
+/// ```rust
 /// pub fn zero<T: 'static>() -> Church<T> {
 ///    // This is a function(closure) that takes a function `_f` and returns
 ///    // another function `move |x| x`. Obviously this closure's type satisfies
@@ -276,6 +277,8 @@
 ///     Rc::new(move |f| Rc::new(move |x| f(x)))
 /// }
 ///
+/// ```
+/// ```no_run
 /// // `two` is to apply a function `f` to `x` twice.
 /// pub fn two<T: 'static>() -> Church<T> {
 ///     todo!()
@@ -308,7 +311,7 @@
 /// Why couldn't we just write "impl<T> From<usize> for Church<T>"?
 /// Try it, look at what compiler of IDE says and get some knowledge of
 /// `encapsulation` in Rust!
-/// ```no_run
+/// ```rust
 /// pub fn from_usize<T: 'static>(n: usize) -> Church<T> {
 ///     let mut result = zero();
 ///     for _ in 0..n {
@@ -352,7 +355,8 @@
 ///     let result = *count.borrow();
 ///     result
 /// }
-///
+/// ```
+/// ```no_run
 /// // `add` is to add two Church numbers `n` and `m`.
 /// // i.e. call `f` on `x` n times, and then another `m` times.
 /// pub fn add<T: 'static>(n: Church<T>, m: Church<T>) -> Church<T> {
@@ -372,7 +376,7 @@
 /// ```
 ///
 /// You should pass following tests after implementing contents above.
-/// ```no_run
+/// ```rust
 /// mod test_church {
 ///     use super::*;
 ///     type T = ();
@@ -498,6 +502,7 @@ enum Peano {
     S(Rc<Peano>), // Successor of a natural number is a natural number.
 }
 
+#[cfg(not(feature = "judge"))]
 impl Peano {
     fn pred(self) -> Self {
         match self {
@@ -511,6 +516,7 @@ impl Peano {
     }
 }
 
+#[cfg(not(feature = "judge"))]
 impl From<usize> for Peano {
     fn from(value: usize) -> Self {
         match value {
@@ -520,6 +526,7 @@ impl From<usize> for Peano {
     }
 }
 
+#[cfg(not(feature = "judge"))]
 impl Into<usize> for Peano {
     fn into(self) -> usize {
         match self {
@@ -541,6 +548,7 @@ impl Add for Peano {
     }
 }
 
+#[cfg(not(feature = "judge"))]
 impl Sub for Peano {
     type Output = Peano;
     fn sub(self, rhs: Self) -> Self::Output {
@@ -556,6 +564,7 @@ impl Sub for Peano {
     }
 }
 
+#[cfg(not(feature = "judge"))]
 impl Mul for Peano {
     type Output = Peano;
     fn mul(self, rhs: Self) -> Self::Output {
@@ -608,15 +617,18 @@ pub fn one<T: 'static>() -> Church<T> {
 }
 
 // `two` is to apply a function `f` to `x` twice.
+#[cfg(not(feature = "judge"))]
 pub fn two<T: 'static>() -> Church<T> {
     Rc::new(move |f| Rc::new(move |x| f(f(x))))
 }
 
 // `three` is to apply a function `f` to `x` three times.
+#[cfg(not(feature = "judge"))]
 pub fn three<T: 'static>() -> Church<T> {
     Rc::new(move |f| Rc::new(move |x| f(f(f(x)))))
 }
 
+#[cfg(not(feature = "judge"))]
 pub fn succ<T: 'static>(n: Church<T>) -> Church<T> {
     Rc::new(move |f| {
         let f_n = n(Rc::clone(&f));
@@ -670,6 +682,7 @@ pub fn to_usize<T: 'static + Default>(n: Church<T>) -> usize {
 
 // `add` is to add two Church numbers `n` and `m`.
 // i.e. call `f` on `x` n times, and then another `m` times.
+#[cfg(not(feature = "judge"))]
 pub fn add<T: 'static>(n: Church<T>, m: Church<T>) -> Church<T> {
     Rc::new(move |f| {
         // Apply `f` n times first.
@@ -681,6 +694,7 @@ pub fn add<T: 'static>(n: Church<T>, m: Church<T>) -> Church<T> {
 }
 
 // `mult`. Applying "calling `f` on `x` n times" m times.
+#[cfg(not(feature = "judge"))]
 pub fn mult<T: 'static>(n: Church<T>, m: Church<T>) -> Church<T> {
     Rc::new(move |f| {
         // Apply `f` n times first.
@@ -693,6 +707,7 @@ pub fn mult<T: 'static>(n: Church<T>, m: Church<T>) -> Church<T> {
 
 // `exp`. Most difficult one.
 // Well, try to get some inspiration from the type annotaion of `m`.
+#[cfg(not(feature = "judge"))]
 pub fn exp<T: 'static>(n: Church<T>, m: Church<Rc<dyn Fn(T) -> T>>) -> Church<T> {
     Rc::new(move |f| {
         let n: Church<T> = n.clone();
