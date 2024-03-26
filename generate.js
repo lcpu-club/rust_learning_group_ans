@@ -23,17 +23,23 @@ function extractTemplate(code) {
     }
     if (parsing && line === '/// ```') {
       parsing = false
-      return {
-        template: result.join('\n').trimEnd() + '\n',
-        ojMerge
-      }
+      result.push('')
+      continue
     }
     if (parsing) {
       result.push(line.slice(4).trimEnd())
     }
   }
-  consola.fatal('No template found')
-  process.exit(1)
+
+  if (result.length === 0) {
+    consola.fatal('No template found')
+    process.exit(1)
+  }
+
+  return {
+    template: result.join('\n').trimEnd() + '\n',
+    ojMerge
+  }
 }
 
 const mappings = parse(await fs.readFile(path.join(__dirname, 'mappings.yml'), 'utf8'))
