@@ -37,7 +37,7 @@
 /// So it's clear how to define a Peano style natural number representation in Rust.
 /// We choose to use `enum` as it coult hold different `states` of a type.
 /// 
-/// ``` no_run
+/// ```no_run
 /// #[derive(Debug, Clone, PartialEq)]
 /// enum Peano {
 ///     O,              // Zero is natural number.
@@ -55,15 +55,14 @@
 /// turn a numeral `42` into String "42". Or, we want to extract a numeral 42 directly
 /// from a JSON stream. Or, we could turn a Rust native `usize` value into Peano-style
 /// natural number. Then we could implement `From<usize>` trait for them.
-/// 
-/// ``` no_run
+/// ```
 /// impl From<usize> for String;
 /// impl Into<usize> for JsonStream; // Pseudo type `JsonStream`.
 /// impl From<usize> for Peano;
 /// ```
 /// 
 /// Complete these two implementations.
-/// ``` no_run
+/// ```no_run
 /// impl From<usize> for Peano {
 ///     fn from(value: usize) -> Self {
 ///         todo!()
@@ -87,7 +86,7 @@
 /// 
 /// Complete the definition of `pred` and `succ` here. You may want to use `match`
 /// pattern for this exercise. (`match` pattern is powerful!)
-/// ``` no_run
+/// ```no_run
 /// impl Peano {
 ///     fn pred(self) -> Self {
 ///         todo!()
@@ -102,7 +101,7 @@
 /// vior when we apply `+` to two `T` typed values.
 ///
 /// It's definition is:
-/// ``` no_run
+/// ```
 /// trait Add {
 ///     type Output;
 ///     fn add(self, rhs: Self) -> Self::Output;
@@ -119,7 +118,7 @@
 /// Then `fn add` tell Rust how to add these two values.
 /// After implementing `Add` for Peano, this piece of code should pass test.
 /// 
-/// ``` no_run
+/// ```
 /// let peano_2: Peano = 2.into();
 /// let peano_3: Peano = 3.into();
 /// let peano_5: Peano = 5.into();
@@ -128,7 +127,7 @@
 /// 
 /// It's like rewriting `operator+` in C++, isn't it?
 /// 
-/// ``` no_run
+/// ```no_run
 /// impl Add for Peano {
 ///     type Output = Peano;
 ///     fn add(self, rhs: Self) -> Self::Output {
@@ -144,7 +143,7 @@
 /// 
 /// Similarly, trait `Sub` describes how to apply `-` to `enum Peano`.
 /// Complete the implementation. Don't forget `type Output`.
-/// ``` no_run
+/// ```no_run
 /// impl Sub for Peano {
 ///     todo!()
 /// }
@@ -154,14 +153,14 @@
 /// Hint: it's ok to use recursion and previously implemented traits. And you
 /// may want to break multiplication into many additions.
 /// 
-/// ``` no_run
+/// ```no_run
 /// impl Mul for Peano {
 ///     todo!()
 /// }
 /// ```
 /// 
 /// You should pass following tests after successfully implemented contents above.
-/// ``` no_run
+/// ```no_run
 /// mod test_peano {
 ///     use super::*;
 ///
@@ -235,7 +234,7 @@
 /// we do not care much about what type does the function apply and return, we
 /// only need a `function`.
 /// 
-/// ``` no_run
+/// ```
 /// // Turn `Fn` into `Fn(T)->T`.
 /// pub type Church = Rc<dyn Fn(Rc<dyn Fn(T) -> T>) -> Rc<dyn Fn(T) -> T>>;
 /// ```
@@ -244,7 +243,7 @@
 ///
 /// To illustrate this long type definition more clearly, we could expand this
 /// line into several lines.
-/// ``` no_run
+/// ```
 /// pub type Church<T> =
 ///     Rc<                             // Wrapper to make compiler happy.
 ///         dyn Fn                      // A function
@@ -253,14 +252,14 @@
 ///     >;
 /// ```
 /// 
-/// ``` no_run
+/// ```no_run
 /// pub type Church<T> = Rc<dyn Fn(Rc<dyn Fn(T) -> T>) -> Rc<dyn Fn(T) -> T>>;
 /// ```
 /// 
 /// Zero is a natural number. So in Church numeral, it is a function.
 /// We can call `zero` to get a Church number `zero`.
 /// 
-/// ``` no_run
+/// ```no_run
 /// pub fn zero<T: 'static>() -> Church<T> {
 ///    // This is a function(closure) that takes a function `_f` and returns
 ///    // another function `move |x| x`. Obviously this closure's type satisfies
@@ -298,7 +297,7 @@
 /// 
 /// Hint: successor of `n` is `n+1`. `n` means we have called function `f` on
 /// `x` for n times, and we should call `f` on `x` once again to get `n+1`.
-/// ``` no_run
+/// ```no_run
 /// pub fn succ<T: 'static>(n: Church<T>) -> Church<T> {
 ///     todo!()
 /// }
@@ -309,7 +308,7 @@
 /// Why couldn't we just write "impl<T> From<usize> for Church<T>"?
 /// Try it, look at what compiler of IDE says and get some knowledge of
 /// `encapsulation` in Rust!
-/// ``` no_run
+/// ```no_run
 /// pub fn from_usize<T: 'static>(n: usize) -> Church<T> {
 ///     let mut result = zero();
 ///     for _ in 0..n {
@@ -318,7 +317,7 @@
 ///     result
 /// }
 /// 
-/// /// Same reason, we cannot write `impl<T> Into<usize> for Church<T>`.
+/// // Same reason, we cannot write `impl<T> Into<usize> for Church<T>`.
 /// pub fn to_usize<T: 'static + Default>(n: Church<T>) -> usize {
 ///     let count = Rc::new(RefCell::new(0));
 ///     let c = Rc::clone(&count);
@@ -354,26 +353,26 @@
 ///     result
 /// }
 ///
-/// /// `add` is to add two Church numbers `n` and `m`.
-/// /// i.e. call `f` on `x` n times, and then another `m` times.
+/// // `add` is to add two Church numbers `n` and `m`.
+/// // i.e. call `f` on `x` n times, and then another `m` times.
 /// pub fn add<T: 'static>(n: Church<T>, m: Church<T>) -> Church<T> {
 ///     todo!()
 /// }
 ///
-/// /// `mult`. Applying "calling `f` on `x` n times" m times.
+/// // `mult`. Applying "calling `f` on `x` n times" m times.
 /// pub fn mult<T: 'static>(n: Church<T>, m: Church<T>) -> Church<T> {
 ///     todo!()
 /// }
 ///
-/// /// `exp`. Most difficult one.
-/// /// Well, try to get some inspiration from the type annotaion of `m`.
+/// // `exp`. Most difficult one.
+/// // Well, try to get some inspiration from the type annotaion of `m`.
 /// pub fn exp<T: 'static>(n: Church<T>, m: Church<Rc<dyn Fn(T) -> T>>) -> Church<T> {
 ///     todo!()
 /// }
 /// ```
 /// 
 /// You should pass following tests after implementing contents above.
-/// ``` no_run
+/// ```no_run
 /// mod test_church {
 ///     use super::*;
 ///     type T = ();
