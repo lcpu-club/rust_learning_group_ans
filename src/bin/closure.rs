@@ -56,10 +56,10 @@
 /// a special borrow called "unique immutable borrow". This borrow cannot be used
 /// elsewhere. Consider the following example:
 /// ```
-/// let a = vec![1, 2, 3];
+/// let mut a = vec![1, 2, 3];
 /// let x = &mut a;
 /// {
-///     let c = || x.push(4); // <- unique immutable borrow
+///     let mut c = || x.push(4); // <- unique immutable borrow
 ///     // let y = &x;
 ///     c();
 /// }
