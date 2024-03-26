@@ -5,7 +5,7 @@
 /// But by utilizing trait `Printable` and implement this trait for these three types,
 /// we could call `print` on a value of these three types regardless of what type it
 /// is specifically.
-/// 
+///
 /// ### Goal
 /// 1.  Implement `Printable` for `SimpleMessage`. `print` should simply return the
 ///     String slice it holds.
@@ -22,14 +22,14 @@
 /// 5.  Complete `print_only_rgb` which go over a vector holding `Screen` values. The
 ///     function should pick out `Screen::RGB` and get the print String and leave out
 ///     `Screen::Gray`. Look up `filter` in Rust standard library.
-/// 
+///
 /// ## Implement `Iterator` trait for a type.
 /// A type implemented `Iterator` trait could be turned into a iterator, and thus passed
 /// to `for` loop or a method that takes a iterator as argument (e.g. `map`, `filter`).
 /// It's worth mentioning that `0..10` in `for i in 0..10` is actually a `Range<usize>` value.
 /// And `Range<T>` has implemented `Iterator` trait and it yields a item every time the `for`
 /// loop calls to its `next` methods implicitly.
-/// 
+///
 /// ### Goal
 /// 1.  Implement `Iterator` trait for `Fibonacci` to make a `Fibonacci` typed value to return
 ///     a u32 value that's the next item of a Fibonacci array when its `next` method is invoked.
@@ -39,11 +39,11 @@
 ///     `fib_number` field with a Fibnacci number STARTED from the third item in a fibonacci
 ///     array. The origin fibonacci number generator could be fetched by calling `fibonacci()`.
 ///     Look up `zip` in Rust standard library.
-/// 
+///
 /// ### Submission
 /// Complete the code and `cargo run`. Upon success you should see nothing but `All tests passed!`.
 /// Then submit this file to OJ.
-/// ```
+/// ```no_run
 /// #[derive(Debug, Clone)]
 /// struct SimpleMessage (
 ///     &'static str,
@@ -60,7 +60,7 @@
 ///     birthday: (usize, usize, usize), // YY-MM-DD
 ///     pub fib_number: Option<u32>,
 /// }
-/// 
+///
 /// trait Printable {
 ///     fn print(&self) -> String;
 /// }
@@ -279,9 +279,7 @@ trait Printable {
 }
 
 #[derive(Debug, Clone)]
-struct SimpleMessage (
-    &'static str,
-);
+struct SimpleMessage(&'static str);
 impl Printable for SimpleMessage {
     fn print(&self) -> String {
         self.0.to_string()
@@ -325,11 +323,9 @@ fn print_to_vec(print_vec: Vec<Box<dyn Printable>>) -> Vec<String> {
 fn print_only_rgb(print_vec: Vec<Screen>) -> Vec<String> {
     print_vec
         .iter()
-        .filter(|&x| {
-            match x {
-                Screen::RGB(_, _, _) => true,
-                Screen::Gray(_) => false,
-            }
+        .filter(|&x| match x {
+            Screen::RGB(_, _, _) => true,
+            Screen::Gray(_) => false,
         })
         .map(|x| x.print())
         .collect()
@@ -380,7 +376,6 @@ fn zip_student_and_fibonacci(mut vec: Vec<Student>) -> Vec<Student> {
         })
         .collect()
 }
-
 
 fn quiz() {
     let student_1 = Student {
@@ -467,7 +462,10 @@ fn quiz() {
         "No.6: Curry, birthday 2004-7-12",
         "No.7: Hans, birthday 2001-8-31",
         "No.8: Alice, birthday 2004-5-30",
-    ].iter().map(|x| x.to_string()).collect();
+    ]
+    .iter()
+    .map(|x| x.to_string())
+    .collect();
 
     let vec_2: Vec<Screen> = vec![
         Screen::RGB(255, 42, 16),
@@ -477,11 +475,10 @@ fn quiz() {
         Screen::RGB(80, 21, 23),
     ];
 
-    let expect_vec_2: Vec<String> = vec![
-        "255:42:16",
-        "142:42:30",
-        "80:21:23",
-    ].iter().map(|x| x.to_string()).collect();
+    let expect_vec_2: Vec<String> = vec!["255:42:16", "142:42:30", "80:21:23"]
+        .iter()
+        .map(|x| x.to_string())
+        .collect();
 
     let vec_3: Vec<Student> = vec![
         student_1.clone(),
