@@ -63,7 +63,7 @@
 /// ```
 /// 
 /// Complete these two implementations.
-/// ```
+/// ``` no_run
 /// impl From<usize> for Peano {
 ///     fn from(value: usize) -> Self {
 ///         todo!()
@@ -87,7 +87,7 @@
 /// 
 /// Complete the definition of `pred` and `succ` here. You may want to use `match`
 /// pattern for this exercise. (`match` pattern is powerful!)
-/// ```
+/// ``` no_run
 /// impl Peano {
 ///     fn pred(self) -> Self {
 ///         todo!()
@@ -128,7 +128,7 @@
 /// 
 /// It's like rewriting `operator+` in C++, isn't it?
 /// 
-/// ```
+/// ``` no_run
 /// impl Add for Peano {
 ///     type Output = Peano;
 ///     fn add(self, rhs: Self) -> Self::Output {
@@ -144,7 +144,7 @@
 /// 
 /// Similarly, trait `Sub` describes how to apply `-` to `enum Peano`.
 /// Complete the implementation. Don't forget `type Output`.
-/// ```
+/// ``` no_run
 /// impl Sub for Peano {
 ///     todo!()
 /// }
@@ -154,14 +154,14 @@
 /// Hint: it's ok to use recursion and previously implemented traits. And you
 /// may want to break multiplication into many additions.
 /// 
-/// ```
+/// ``` no_run
 /// impl Mul for Peano {
 ///     todo!()
 /// }
 /// ```
 /// 
 /// You should pass following tests after successfully implemented contents above.
-/// ```
+/// ``` no_run
 /// mod test_peano {
 ///     use super::*;
 ///
@@ -196,7 +196,7 @@
 /// It would be super easy to write out its definition in a language where function
 /// is first-class member.
 ///
-/// ``` no_run
+/// ```
 /// type Church = function(function)->function; // Pseudo code, don't try to run it.
 /// ```
 /// 
@@ -212,7 +212,7 @@
 /// We choose `dyn` here. So a type that implements trait `Fn` could be written
 /// as `dyn Fn` anonymously.
 /// 
-/// ``` no_run
+/// ```
 /// type Church = dyn Fn(dyn Fn) -> dyn Fn; // Pseudo code, don't try to run it.
 /// ```
 /// 
@@ -253,14 +253,14 @@
 ///     >;
 /// ```
 /// 
-/// ```
+/// ``` no_run
 /// pub type Church<T> = Rc<dyn Fn(Rc<dyn Fn(T) -> T>) -> Rc<dyn Fn(T) -> T>>;
 /// ```
 /// 
 /// Zero is a natural number. So in Church numeral, it is a function.
 /// We can call `zero` to get a Church number `zero`.
 /// 
-/// ```
+/// ``` no_run
 /// pub fn zero<T: 'static>() -> Church<T> {
 ///    // This is a function(closure) that takes a function `_f` and returns
 ///    // another function `move |x| x`. Obviously this closure's type satisfies
@@ -272,17 +272,17 @@
 /// }
 /// 
 /// 
-/// /// `one` is to apply a function `f` to `x` once.
+/// // `one` is to apply a function `f` to `x` once.
 /// pub fn one<T: 'static>() -> Church<T> {
 ///     Rc::new(move |f| Rc::new(move |x| f(x)))
 /// }
 ///
-/// /// `two` is to apply a function `f` to `x` twice.
+/// // `two` is to apply a function `f` to `x` twice.
 /// pub fn two<T: 'static>() -> Church<T> {
 ///     todo!()
 /// }
 ///
-/// /// `three` is to apply a function `f` to `x` three times.
+/// // `three` is to apply a function `f` to `x` three times.
 /// pub fn three<T: 'static>() -> Church<T> {
 ///     todo!()
 /// }
@@ -298,7 +298,7 @@
 /// 
 /// Hint: successor of `n` is `n+1`. `n` means we have called function `f` on
 /// `x` for n times, and we should call `f` on `x` once again to get `n+1`.
-/// ```
+/// ``` no_run
 /// pub fn succ<T: 'static>(n: Church<T>) -> Church<T> {
 ///     todo!()
 /// }
@@ -309,7 +309,7 @@
 /// Why couldn't we just write "impl<T> From<usize> for Church<T>"?
 /// Try it, look at what compiler of IDE says and get some knowledge of
 /// `encapsulation` in Rust!
-/// ```
+/// ``` no_run
 /// pub fn from_usize<T: 'static>(n: usize) -> Church<T> {
 ///     let mut result = zero();
 ///     for _ in 0..n {
@@ -373,7 +373,7 @@
 /// ```
 /// 
 /// You should pass following tests after implementing contents above.
-/// ```
+/// ``` no_run
 /// mod test_church {
 ///     use super::*;
 ///     type T = ();
