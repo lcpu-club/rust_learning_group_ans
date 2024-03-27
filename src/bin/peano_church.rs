@@ -16,6 +16,7 @@
 /// types in Rust and that generic parameter is used when you don't want to give
 /// a specific associated type to another type in this section.
 /// 
+/// 
 /// ### How to define a natural number with Peano Axiom?
 /// A Peano definition of natural number is: a natural number is either zero,
 /// or successor of another natural number.
