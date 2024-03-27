@@ -5,32 +5,17 @@
 /// Just read the file, complete it and run. You could submit this file once
 /// you see `All tests passed` after running `cargo run`.
 /// 
-/// ### Is Rust a functional programming language?
-/// 1. No, Rust is a instructional programming language.
-///    (1) Because we have all these loops, variables and endless side-
-///        effects.
-///    (2) Function is not first-class member in Rust. If we want to
-///        pass a function as an argument, you'll need keywords `dyn`
-///        and some wrapping helpers like `Rc` and `Box`, just to make
-///        compiler happy. After all, rustc need to arrange memory
-///        layout for you.
-///    (3) ...
-///
-/// 2. Eh, Rust is like a functional programming language in some aspects.
-///    (1) Rust have powerful functional-like functionalities (Hahaha).
-///        Like some common methods `for_each`, `map`, `reduce`, `filter`
-///        on iterators, and `match` pattern of course, which is one of
-///        the kernel concepts in common functional programming languages,
-///        and Rust integrated them into itself very well.
-///    (2) When programming with Rust, you think differently from program-
-///        ming with C. When using C, you should always keep in your mind
-///        the layout of memory, which pointer points to heap, which memory
-///        should be freed to make your program behave well. In a word, you
-///        are manipulating "memory" in C. But in Rust, you're always mani-
-///        pulating `value` instead of "memory" itself directly. I mean,
-///        Rust has provided you with a layer of abstraction.
+/// ### Implement natural number in another way.
+/// Natural number could be represented by unsigned number in Rust as well as in
+/// most imperative programming languages. However the definition of natural number
+/// could be derived from Peano Axiom or Lambda Calculus as well. We are going to
+/// implement basic Peano numerals and Church numarals in this chapter to grasp 
+/// some functional programming features of Rust and understand Rust polymorphism
+/// and closure. You could see how `trait` in Rust regulates shared behaviors of
+/// types in Rust and that generic parameter is used when you don't want to give
+/// a specific associated type to another type in this section.
 /// 
-/// ### How to define a natural number?
+/// ### How to define a natural number with Peano Axiom?
 /// A Peano definition of natural number is: a natural number is either zero,
 /// or successor of another natural number.
 /// 
