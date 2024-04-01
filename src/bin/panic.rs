@@ -43,6 +43,9 @@
 /// Notice the program wiil panic if the input is illegal, so the input after an
 /// illegal input will not be processed.
 ///
+/// It is confirmed that there must be an illegal input in the input stream, so
+/// the loop in the `main` function will not run forever.
+///
 /// ```no_run
 /// use std::panic::PanicInfo;
 /// use std::process;
