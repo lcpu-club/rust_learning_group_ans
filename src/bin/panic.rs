@@ -40,6 +40,8 @@
 /// - If the input string is a number and the number is in the range of `[0, 100]`,
 ///   the function should return the number.
 ///
+/// Panic with an message can be done by `panic!("message")`.
+///
 /// Notice the program wiil panic if the input is illegal, so the input after an
 /// illegal input will not be processed.
 ///
