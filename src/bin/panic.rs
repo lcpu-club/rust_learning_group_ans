@@ -1,5 +1,8 @@
 //! panic
+#![cfg(not(oj_no_merge))]
 
+/// ### Panic
+///
 /// You may be already familiar with the `panic!` macro. It is usually used to
 /// indicate that the program has reached an unrecoverable state. And the error
 /// that program has encountered is not something that can be handled by the
@@ -48,27 +51,29 @@
 /// It is confirmed that there must be an illegal input in the input stream, so
 /// the loop in the `main` function will not run forever.
 ///
-/// ```no_run
+/// ```rust
 /// use std::panic::PanicInfo;
 /// use std::process;
-//
+///
 /// pub fn panic_handler(panic_info: &PanicInfo) {
 ///     let message = panic_info.payload().downcast_ref::<&str>();
 ///     println!("Panic: {}", if let Some(msg) = message { msg } else { "" });
 ///     process::exit(0);
 /// }
-//
+///
 /// fn read_a_string() -> String {
 ///     let mut input = String::new();
 ///     std::io::stdin().read_line(&mut input).unwrap();
 ///     input
 /// }
-//
+/// ```
+/// ```no_run
 /// fn parse_string_to_a_number(s: String) -> i32 {
 ///     let parsed = s.trim().parse::<i32>();
 ///     todo!()
 /// }
-//
+/// ```
+/// ```rust
 /// fn main() {
 ///     std::panic::set_hook(Box::new(panic_handler));
 ///     loop {
@@ -93,6 +98,7 @@ fn read_a_string() -> String {
     input
 }
 
+#[cfg(not(feature = "judge"))]
 fn parse_string_to_a_number(s: String) -> i32 {
     let parsed = s.trim().parse::<i32>();
     match parsed {
