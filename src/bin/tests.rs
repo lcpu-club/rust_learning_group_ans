@@ -1,4 +1,5 @@
 //! tests
+#![cfg(not(oj_no_merge))]
 
 /// Tests are an important part of any project. Any project without tests will be
 /// vulnerable to bugs. Remember that what tests do is to confirm that the code
@@ -94,7 +95,7 @@
 /// word, your code should represent that fact by marking the extra letters as `R`.
 ///
 /// You can read the test cases below to understand the rules more clearly.
-/// ```no_run
+/// ```rust
 /// use std::collections::HashMap;
 ///
 /// #[derive(Copy, PartialEq, Eq, Debug, Clone)]
@@ -113,11 +114,13 @@
 ///         }
 ///     }
 /// }
-///
+/// ```
+/// ```no_run
 /// fn compare_two_words(input: [char; 5], ans: [char; 5]) -> [State; 5] {
 ///     todo!()
 /// }
-///
+/// ```
+/// ```rust
 /// fn read_one_line() -> String {
 ///     let mut buf = String::new();
 ///     std::io::stdin().read_line(&mut buf).unwrap();
@@ -201,6 +204,7 @@ impl State {
     }
 }
 
+#[cfg(not(feature = "judge"))]
 fn compare_two_words(input: [char; 5], ans: [char; 5]) -> [State; 5] {
     let mut output = [State::Grey; 5];
     let mut cnt = HashMap::new();
