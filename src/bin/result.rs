@@ -1,4 +1,5 @@
 //! result
+#![cfg(not(oj_no_merge))]
 
 /// ### `Result<T, E>`
 /// `Result<T, E>` is a type that may be most commonly appears in the standard library.
@@ -167,11 +168,13 @@
 ///     std::io::stdin().read_line(&mut input).unwrap();
 ///     input
 /// }
-///
+/// ```
+/// ```no_run
 /// fn parse_string_to_a_number(s: String) -> Result<i32, MyError> {
 ///     todo!()
 /// }
-///
+/// ```
+/// ```rust
 /// fn main() -> Result<(), MyError> {
 ///     let n = read_a_string().trim().parse::<i32>().unwrap();
 ///     for _ in 0..n {
@@ -202,6 +205,7 @@ fn read_a_string() -> String {
     input
 }
 
+#[cfg(not(feature = "judge"))]
 fn parse_string_to_a_number(s: String) -> Result<i32, MyError> {
     let parsed = s
         .trim()
