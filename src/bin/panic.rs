@@ -39,7 +39,7 @@
 /// - If the input string is not a number, the function should panic with the
 ///   message "Parse error".
 /// - If the input string is a number, but the number is not in the range of
-///   `[0, 100]`, the function should panic with the message "Number Out of range".
+///   `[0, 100]`, the function should panic with the message "Number out of range".
 /// - If the input string is a number and the number is in the range of `[0, 100]`,
 ///   the function should return the number.
 ///
