@@ -262,8 +262,6 @@ impl<T> Deref for Arc<T> {
 }
 
 fn test() {
-    use std::sync::Mutex;
-
     let mut buffer = String::new();
     std::io::stdin().read_line(&mut buffer).unwrap();
     let data: Vec<isize> = buffer
@@ -272,7 +270,7 @@ fn test() {
         .map(|x| x.parse().unwrap())
         .collect();
     let data_size = data.len();
-    let data = Arc::new(Mutex::new(data));
+    let data = Arc::new(data);
     let answer = Arc::new(AtomicUsize::new(0));
 
     std::thread::scope(|s| {
@@ -281,11 +279,12 @@ fn test() {
             let data = data.clone();
             let answer = answer.clone();
             s.spawn(move || {
-                let element = data.lock().unwrap()[i];
+                let element = data[i];
                 answer.fetch_add((element * element) as usize, Relaxed);
             });
         }
     });
+    println!("{}", answer.load(Relaxed));
     unsafe { assert_eq!((*data.inner).counter.load(Relaxed), 1, "Your reference counting is wrong.") };
 }
 
